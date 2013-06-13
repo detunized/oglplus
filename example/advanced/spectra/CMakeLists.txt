@@ -4,12 +4,11 @@
 #
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
-if(wxWidgets_FOUND)
+if((wxWidgets_FOUND) AND (OPENAL_FOUND))
 	add_definitions(-DOGLPLUS_LINK_LIBRARY=1)
+	add_definitions(-DOALPLUS_LINK_LIBRARY=1)
 
-	if(OPENAL_FOUND)
-		include_directories(${OPENAL_INCLUDE_DIRS})
-	endif()
+	include_directories(${OPENAL_INCLUDE_DIRS})
 
 	include_directories(${wxWidgets_INCLUDE_DIRS})
 	include(${wxWidgets_USE_FILE})
@@ -43,9 +42,7 @@ if(wxWidgets_FOUND)
 	endif()
 
 	target_link_libraries(spectra ${wxWidgets_LIBRARIES} ${OGLPLUS_GL_LIBS})
-	if(OPENAL_FOUND)
-		target_link_libraries(spectra ${OPENAL_LIBRARIES})
-	endif()
+	target_link_libraries(spectra ${OPENAL_LIBRARIES})
 	add_dependencies(oglplus-advanced-example-spectra spectra)
 	add_dependencies(oglplus-advanced-examples oglplus-advanced-example-spectra)
 endif()
